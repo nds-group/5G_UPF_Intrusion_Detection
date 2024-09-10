@@ -6,7 +6,6 @@ input_file = sys.argv[1] # file to be labelled
 output_file = sys.argv[2] # name of output file - these two are catered for in the bash scripts
 
 # label file
-# Labels = pd.read_csv("./Data_Analysis_DNP3_labs_unique.csv")
 Labels = pd.read_csv(sys.argv[3])
 
 packet_data = pd.DataFrame()
@@ -18,7 +17,6 @@ packet_data.columns = ["frame.time_relative","ip.src","ip.dst","tcp.srcport","tc
                    "tcp.flags.reset","tcp.flags.ece","ip.proto","udp.srcport","udp.dstport",
                    "eth.src","eth.dst", "ip.hdr_len", "ip.tos", "ip.ttl", "tcp.window_size_value", 
                    "tcp.hdr_len", "udp.length"]
-# "sctp.srcport", "sctp.dstport", "sctp.verification_tag","sctp.checksum"
 
 packet_data = packet_data[(packet_data["ip.proto"] != "1,17") & (packet_data["ip.proto"] != "1,6")].reset_index(drop=True)
 packet_data = packet_data.dropna(subset=['ip.proto'])
@@ -35,12 +33,6 @@ packet_data["tcp.srcport"] = packet_data["tcp.srcport"].astype('Int64').fillna(0
 packet_data["tcp.dstport"] = packet_data["tcp.dstport"].astype('Int64').fillna(0)
 packet_data["udp.srcport"] = packet_data["udp.srcport"].astype('Int64').fillna(0)
 packet_data["udp.dstport"] = packet_data["udp.dstport"].astype('Int64').fillna(0)
-##
-# packet_data["sctp.srcport"] = packet_data["sctp.srcport"].astype('Int64').fillna(0)
-# packet_data["sctp.dstport"] = packet_data["sctp.dstport"].astype('Int64').fillna(0)
-##
-# packet_data["srcport"] = np.where(packet_data["ip.proto"] == 6, packet_data["tcp.srcport"], packet_data["udp.srcport"])
-# packet_data["dstport"] = np.where(packet_data["ip.proto"] == 6, packet_data["tcp.dstport"], packet_data["udp.dstport"])
 ##
 packet_data["srcport"] = np.where(
     packet_data["ip.proto"] == 6, packet_data["tcp.srcport"],

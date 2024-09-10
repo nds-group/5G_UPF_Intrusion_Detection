@@ -1,17 +1,33 @@
 ## Instructions for reproducing the labelled _csv_ files
-- Download the data from [https://ieee-dataport.org/documents/5g-nidd](https://ieee-dataport.org/documents/5g-nidd-comprehensive-network-intrusion-detection-dataset-generated-over-5g-wireless) 
-- Extract the files into a folder
+Download the data from [https://ieee-dataport.org/documents/5g-nidd](https://ieee-dataport.org/documents/5g-nidd-comprehensive-network-intrusion-detection-dataset-generated-over-5g-wireless) and extract the files into your _data_ folder.
 
+### Generating the label files
+To generate the label files, we employ the _each_attack_csv_ files from each base station and the _get_labels.sh_ script. The output is saved in the respective _attack_labels_ folder.
+```
+bash get_labels.sh ./data/BS1_each_attack_csv ./data/BS1_attack_labels/
+bash get_labels.sh ./data/BS2_each_attack_csv ./data/BS2_attack_labels/
+```
 
-- Run the _split_pcaps.py_ script using the above folder as the input folder. 
-    - This will create two folders; Train and Test, each containing a pcap which is respectively 75% and 25% of each original pcap from the individual folders.
+### Extracting and labelling the packet data
+As we do not simulate the full 5G architecture, we take the pcaps with GTP layer removed, e.g., those in _BS1_GTP_removed.zip_.
 
-- For each folder Train or Test, run the _get_pkt_data.sh_ script to extract the packet data from the pcap files.
-- For each folder Train or Test, run the _get_labeled_pkt_data.sh_ script to label the extracted packet data. This script depends on the _clean_and_label.py_ script which itself uses the Data_Analysis_DNP3_labs_unique.csv file.
-- Use the _load_and_merge.py_ script to merge the csv files generated from the step above to create a train and test csv file.
-    - Our generated Train and Test data are provided at https://box.networks.imdea.org/s/M8QFbsKJHzykeIb.
+Split the pcap files into Train and Test pcaps using the 75-25 split ratio.
+```
+python3 split_pcaps.py ./data/BS1_GTP_removed
+python3 split_pcaps.py ./data/BS2_GTP_removed
+```
+Extract the packet data as follows.
+```
+bash get_pkt_data.sh ./data/BS1_GTP_removed
+bash get_pkt_data.sh ./data/BS2_GTP_removed
+```
+Label the extracted packet data using the previously generated label files.
+```
+bash get_labeled_pkt_data.sh ./data/BS1_GTP_removed ./data/BS1_attack_labels/
+bash get_labeled_pkt_data.sh ./data/BS2_GTP_removed ./data/BS2_attack_labels/
+```
 
-- Use the _./model_training/DNP3_Data_Analysis_packet.ipynb_ script to train, evaluate and save models. You can also re-generate our diagrams from there.
-    - Our saved model is provided in the _./model_training/dt_model_dnp3_7_classes.pkl_ file.
-- Use the _./model_training/generate_table_entries.py_ file to generate the match & action table entries from the saved model file.
-    - We provide our table entries for direct use in the _./User_Plane_Inference/te_dnp3_attack_pl_model.py_ file.
+### Merging the generated data
+Use the _load_and_merge.py_ script to merge the respective test/train files for each base station. Then use the same script to merge the final test/train csv files from both base stations to generate the final test and train files.
+
+Our generated train and test data following the above steps are provided at https://box.networks.imdea.org/s/bTD6fBakwWLrHp2.

@@ -21,7 +21,7 @@ If you make use of our code, please cite our paper.
 author = {Akem, Aristide Tanyi-Jong and Fiore, Marco},
 title = {Towards Real-Time Intrusion Detection in P4-Programmable 5G User Plane Functions},
 year = {2024},
-booktitle = {IEEE ICNP 2024 - IEEE International Conference on Network Protocols},
+booktitle = {2024 IEEE 32nd International Conference on Network Protocols (ICNP)},
 numpages = {6},
 keywords = {Machine learning, 5G, user plane function, P4},
 }

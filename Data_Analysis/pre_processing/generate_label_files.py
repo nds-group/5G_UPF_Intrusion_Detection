@@ -17,7 +17,7 @@ def create_label_file(input_file):
     proto_map = {'tcp': int(6), 'udp': int(17), 'icmp': int(1)}
     five_tup_dat['Proto'] = five_tup_dat['Proto'].map(proto_map)
     
-    iana_ports = pd.read_csv("/home/nds-admin/Use_Cases/5G_intrusion_detection/service-names-port-numbers.csv")
+    iana_ports = pd.read_csv("service-names-port-numbers.csv")
 
     # remove any spaces in the entries of the service name column
     iana_ports['Service Name'] = iana_ports['Service Name'].str.replace(' ', '')
