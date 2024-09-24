@@ -4,7 +4,7 @@
 
 The paper will be presented at the 7th European P4 Workshop (EuroP4’24), co-located with The 32nd IEEE International Conference on Network Protocols (ICNP 2024), Charleroi, Belgium, October 28-31, 2024.
 
-We show that by leveraging recent advances in (i) hardware acceleration of 5G UPFs with programmable switches, and (ii) user-plane ML inference in programmable switches, we can enable real-time and high-speed intrusion detection on 5G networks. For details, please check out [our paper](#).
+We show that by leveraging recent advances in (i) hardware acceleration of 5G UPFs with programmable switches, and (ii) user-plane ML inference in programmable switches, we can enable real-time and high-speed intrusion detection on 5G networks. For details, please check out [our paper](https://hdl.handle.net/20.500.12761/1846).
 
 ## Organization of the repository  
 There are two folders:  
